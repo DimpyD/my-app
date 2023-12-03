@@ -59,15 +59,25 @@ export default function ProductList(props)
         else{
             const removedList = selectedCategories.filter((item) => (item !== category));
             setSelectedCategories(removedList);
-        }     
+        } 
+        localStorage.setItem('myArray', JSON.stringify(selectedCategories));   
+        console.log(JSON.parse(localStorage.getItem('myArray')).length); 
       }
     
+      const FilterSelectedcat =()=>{
+        const storedArray=JSON.parse(localStorage.getItem('myArray')) || [];
+        console.log(JSON.parse(localStorage.getItem('myArray')));
+        allProducts.filter((item)=>(selectedCategories.includes(item.category)));
+      }
+      //allProducts.filter((item)=>(selectedCategories.includes(item.category)));
       
-       const filteredProducts =
-        selectedCategories.length === 0
+       const filteredProducts = 
+       JSON.parse(localStorage.getItem('myArray')) === null
+       & selectedCategories.length === 0
            ? allProducts
-        : allProducts.filter((item)=>(selectedCategories.includes(item.category)));
+        : allProducts.filter((item)=>(JSON.parse(localStorage.getItem('myArray')).includes(item.category)));
         
+      
        const ViewAllCategory = (e) => {
         if(e.target.checked===true){
             setSelectedCategories([]);
